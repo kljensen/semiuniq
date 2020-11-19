@@ -37,6 +37,118 @@ cache](https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_u
 
 This is useful for me. I hope it is useful for you.
 
+## Building
+
+You need at least Rust version 1.36.0 to build `semiuniq`. You can build the
+program as follows:
+
+```bash
+git clone git@github.com:kljensen/semiuniq.git
+cd semiuniq
+cargo build --release
+```
+
+## Example usage
+
+The following sequence of shell commands shows the use of
+`semiuniq` on an example file.
+
+```
+prompt> cat target/temp.txt
+dog
+dog
+dog
+dog
+fish
+fish
+fish
+fish
+1
+2
+3
+4
+fish
+dog
+1
+2
+3
+4
+5
+dog
+
+prompt> cat target/temp.txt | ./target/release/semiuniq 0
+dog
+dog
+dog
+dog
+fish
+fish
+fish
+fish
+1
+2
+3
+4
+fish
+dog
+1
+2
+3
+4
+5
+dog
+
+prompt> cat target/temp.txt | ./target/release/semiuniq 1
+dog
+fish
+1
+2
+3
+4
+fish
+dog
+1
+2
+3
+4
+5
+dog
+
+prompt> cat target/temp.txt | ./target/release/semiuniq 5
+dog
+fish
+1
+2
+3
+4
+dog
+1
+2
+3
+4
+5
+
+dog
+prompt> cat target/temp.txt | ./target/release/semiuniq 10
+dog
+fish
+1
+2
+3
+4
+5
+```
+
+As you can see the output of `semiuniq 0` is the same as the 
+input. With `semiuniq 1`, the behavior is similar to GNU `uniq`:
+a line is not printed if it is the same as the line that 
+preceded it. With `semiuniq 5` a line is not printed if it
+was contained in the previous 5 lines and so on. `semiuniq 1000`
+would not print a line if it is identical any of the previous
+1000 lines. (The hashes of lines are stored in memory, not 
+the lines themselves.)
+
+
 ## Call for help & inspiration
 
 If you can make this code better, please send me a pull request!  I know jack
