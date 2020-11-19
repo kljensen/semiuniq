@@ -44,6 +44,7 @@ about rust, so I had to use the duckduckgo to write this code. Most of what I
 wrote here is copy/pasted from the following:
 
 * [Read large files line by line in Rust](https://stackoverflow.com/a/45882510)
+* [Reading from stdin or a file](https://stackoverflow.com/a/49964042)
 * [LruCache documentation](https://docs.rs/lru/0.6.1/lru/struct.LruCache.html)
 
 ## License (the Unlicense)
