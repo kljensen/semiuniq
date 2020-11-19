@@ -1,7 +1,9 @@
-# Semiuniq - a fast uniq-like tool for removing nearby duplicated lines in a file
+# Semiuniq
+
+A fast uniq-like tool for removing nearby repeated lines in a file.
 
 The `semiuniq` program reads over lines of input and write lines of output that
-are "semi-unique" by eliminating duplicate lines that are close to each other.
+are "semi-unique" by eliminating repeated lines that are close to each other.
 It is like [GNU
 uniq](https://www.gnu.org/software/coreutils/manual/html_node/uniq-invocation.html)
 but 1) does not require sorting the input and 2) does not guarantee global
@@ -9,7 +11,7 @@ uniqueness of output lines.
 
 Why is this useful? It is useful because in many kinds of files the lines of
 the file are highly correlated such that lines that are identical are likely to
-be next to each other. For example, my shell history looks somethign like this
+be next to each other. For example, my shell history looks something like this
 
 ```bash
 cd foo
