@@ -1,14 +1,19 @@
 extern crate lru;
+use std::env;
+use std::fs;
+use std::io::{self, BufReader, BufRead};
 
 use lru::LruCache;
 
 fn main() -> std::io::Result<()> {
-    let mut reader = my_reader::BufReader::open("test.txt")?;
-    let mut buffer = String::new();
     let mut cache: LruCache<String, bool> = LruCache::new(5);
 
-
-    while let Some(line) = reader.read_line(&mut buffer) {
+    let input = env::args().nth(1);
+    let reader: Box<dyn BufRead> = match input {
+        None => Box::new(BufReader::new(io::stdin())),
+        Some(filename) => Box::new(BufReader::new(fs::File::open(filename)?))
+    };
+    for line in reader.lines() {
         let l = line?;
         let was_present = cache.put(l.clone(), true);
         match was_present {
@@ -17,36 +22,4 @@ fn main() -> std::io::Result<()> {
         }
     }
     Ok(())
-}
-
-mod my_reader {
-    use std::{
-        fs::File,
-        io::{self, prelude::*},
-    };
-
-    pub struct BufReader {
-        reader: io::BufReader<File>,
-    }
-
-    impl BufReader {
-        pub fn open(path: impl AsRef<std::path::Path>) -> io::Result<Self> {
-            let file = File::open(path)?;
-            let reader = io::BufReader::new(file);
-
-            Ok(Self { reader })
-        }
-
-        pub fn read_line<'buf>(
-            &mut self,
-            buffer: &'buf mut String,
-        ) -> Option<io::Result<&'buf mut String>> {
-            buffer.clear();
-
-            self.reader
-                .read_line(buffer)
-                .map(|u| if u == 0 { None } else { Some(buffer) })
-                .transpose()
-        }
-    }
 }
