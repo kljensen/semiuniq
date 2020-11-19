@@ -2,6 +2,19 @@
 
 A fast uniq-like tool for removing nearby repeated lines in a file.
 
+## Building
+
+You need at least Rust version 1.36.0 to build `semiuniq`. You can build the
+program as follows:
+
+```bash
+git clone git@github.com:kljensen/semiuniq.git
+cd semiuniq
+cargo build --release
+```
+
+## Description
+
 The `semiuniq` program reads over lines of input and write lines of output that
 are "semi-unique" by eliminating repeated lines that are close to each other.
 It is like [GNU
@@ -9,9 +22,9 @@ uniq](https://www.gnu.org/software/coreutils/manual/html_node/uniq-invocation.ht
 but 1) does not require sorting the input and 2) does not guarantee global
 uniqueness of output lines.
 
-Why is this useful? It is useful because in many kinds of files the lines of
-the file are highly correlated such that lines that are identical are likely to
-be next to each other. For example, my shell history looks something like this
+Why is this useful? It is useful because in many kinds of log files lines that
+are repeated are likely to be near to each other.
+For example, my shell history looks something like this
 
 ```bash
 cd foo
@@ -27,28 +40,17 @@ ssh hydrogen
 
 As you can see, in this session I typed the same long `ansible-playbook`
 command multiple times, but it was separated by some administrative minutiae.
-Now imagine if my shell history were 58,000 lines long (it is) and I want to
+Now imagine if my shell history were 58,000 lines long (as it is) and I want to
 find out how to run that command by searching through that history using
-something like [fzf](https://github.com/junegunn/fzf), I will see many
-duplicated lines. I could use `sort` and `uniq` to eliminate those lines, but
+something like [fzf](https://github.com/junegunn/fzf). I will see many
+repeated lines. I could use `sort` and `uniq` to eliminate those lines, but
 that would mean sorting all 58,000 lines of history. With `semiuniq`, I make
-one scan over the entire history, without sorting it, and remove duplicate
+one scan over the entire history, without sorting it, and remove repeated
 lines that are "close" to each other in the history using a [least recently
 used
 cache](https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU))
 
 This is useful for me. I hope it is useful for you.
-
-## Building
-
-You need at least Rust version 1.36.0 to build `semiuniq`. You can build the
-program as follows:
-
-```bash
-git clone git@github.com:kljensen/semiuniq.git
-cd semiuniq
-cargo build --release
-```
 
 ## Example usage
 
@@ -78,7 +80,7 @@ dog
 5
 dog
 
-prompt> cat target/temp.txt | ./target/release/semiuniq 0
+prompt> cat target/temp.txt | semiuniq 0
 dog
 dog
 dog
@@ -100,7 +102,7 @@ dog
 5
 dog
 
-prompt> cat target/temp.txt | ./target/release/semiuniq 1
+prompt> cat target/temp.txt | semiuniq 1
 dog
 fish
 1
@@ -116,7 +118,7 @@ dog
 5
 dog
 
-prompt> cat target/temp.txt | ./target/release/semiuniq 5
+prompt> cat target/temp.txt | semiuniq 5
 dog
 fish
 1
@@ -129,9 +131,9 @@ dog
 3
 4
 5
-
 dog
-prompt> cat target/temp.txt | ./target/release/semiuniq 10
+
+prompt> cat target/temp.txt | semiuniq 10
 dog
 fish
 1
