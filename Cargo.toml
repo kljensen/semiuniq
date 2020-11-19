@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 lru = "0.6.1"
+clap = "2.33.3"
