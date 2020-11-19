@@ -152,7 +152,9 @@ preceded it. With `semiuniq 5` a line is not printed if it
 was contained in the previous 5 lines and so on. `semiuniq 1000`
 would not print a line if it is identical any of the previous
 1000 lines. (The hashes of lines are stored in memory, not 
-the lines themselves.)
+the lines themselves. We're using the default hash of
+[LruCache](https://github.com/jeromefroe/lru-rs), which is
+[aHash](https://github.com/tkaitchuck/aHash).)
 
 
 ## Call for help & inspiration
