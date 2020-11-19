@@ -13,6 +13,8 @@ cd semiuniq
 cargo build --release
 ```
 
+The program will be located at `./target/release/semiuniq`.
+
 ## Description
 
 The `semiuniq` program reads over lines of input and write lines of output that
