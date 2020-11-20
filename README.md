@@ -156,6 +156,42 @@ the lines themselves. We're using the default hash of
 [LruCache](https://github.com/jeromefroe/lru-rs), which is
 [aHash](https://github.com/tkaitchuck/aHash).)
 
+## Benchmark
+
+This is a terrible benchmark. I made a file with about 700k lines of shell
+history and compared `semiuniq` to `sort | uniq`. Obviously, not sorting
+saves a ton of time, duh.
+
+```
+promt> wc -l example-shell-history.txt
+   54631 example-shell-history.txt
+
+prompt> alias cmd1="cat ./example-shell-history.txt|sort|uniq >/dev/null" 
+
+prompt> time cmd1 
+cat ./example-shell-history.txt  0.00s user 0.01s system 11% cpu 0.060 total
+sort  0.16s user 0.01s system 85% cpu 0.197 total
+uniq > /dev/null  0.06s user 0.00s system 30% cpu 0.196 total
+
+prompt> alias cmd2="cat ./example-shell-history.txt|semiuniq  1000 >/dev/null"
+
+prompt> time cmd2
+cat ./example-shell-history.txt  0.00s user 0.01s system 8% cpu 0.095 total
+~/src/github.com/kljensen/semiuniq/target/release/semiuniq 500 > /dev/null  0.07s user 0.02s system 98% cpu 0.096 total
+```
+
+The `semiuniq` allows a few more repeated lines through with the window size
+of 500.
+
+
+```
+prompt>  cat ./example-shell-history.txt|sort|uniq |wc -l
+   54112
+
+prompt> cat ./example-shell-history.txt|semiuniq 500 |wc -l
+   54204
+```
+
 
 ## Call for help & inspiration
 
