@@ -158,7 +158,7 @@ the lines themselves. We're using the default hash of
 
 ## Benchmark
 
-This is a terrible benchmark. I made a file with about 700k lines of shell
+This is a terrible benchmark. I used my shell
 history and compared `semiuniq` to `sort | uniq`. Obviously, not sorting
 saves a ton of time, duh.
 
