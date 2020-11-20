@@ -1,6 +1,6 @@
 # Semiuniq
 
-A fast uniq-like tool for removing nearby repeated lines in a file.
+A [hopefully fast] uniq-like tool for removing nearby repeated lines in a file.
 
 ## Building
 
