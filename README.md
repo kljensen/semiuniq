@@ -15,6 +15,22 @@ cargo build --release
 
 The program will be located at `./target/release/semiuniq`.
 
+Or, if you are a [homebrew](https://brew.sh/) user, you can install
+`semiuniq` via the [kljensen/tap](https://github.com/kljensen/homebrew-tap)
+tap using either
+
+```
+brew install kljensen/tap/semiuniq
+```
+
+or
+
+```
+brew tap kljensen/tap
+brew install semiuniq
+```
+
+
 ## Description
 
 The `semiuniq` program reads over lines of input and write lines of output that
