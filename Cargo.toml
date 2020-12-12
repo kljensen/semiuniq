@@ -3,8 +3,15 @@ name = "semiuniq"
 version = "0.1.0"
 authors = ["Kyle L. Jensen <kljensen@gmail.com>"]
 edition = "2018"
+description = "A uniq-like tool for removing nearby repeated lines in a file"
+homepage = "https://github.com/kljensen/semiuniq"
+repository = "https://github.com/kljensen/semiuniq"
+license = "Unlicense"
+keywords = ["uniq", "cli"]
+categories = ["command-line-utilities"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# See more keys and their definitions at
+# https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 lru = "0.6.1"
