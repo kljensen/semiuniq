@@ -24,7 +24,7 @@ jobs:
       - uses: mislav/bump-homebrew-formula-action@v1
         if: "!contains(github.ref, '-')" # skip prereleases
         with:
-          formula-name: 'cleanup-heroku'
+          formula-name: 'semiuniq'
           homebrew-tap: 'kljensen/homebrew-tap'
           base-branch: 'main'
           commit-message: '{{formulaName}} {{version}}'
