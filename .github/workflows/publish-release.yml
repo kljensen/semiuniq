@@ -8,6 +8,7 @@ name: 'publish-releases'
 jobs:
   cargo:
     name: Publish release to cargo
+    runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v2
         - uses: actions-rs/toolchain@v1
@@ -17,3 +18,19 @@ jobs:
         - uses: katyo/publish-crates@v1
           with:
               registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+  homebrew:
+    name: Publish release to kljensen/homebrew-tap 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mislav/bump-homebrew-formula-action@v1
+        if: "!contains(github.ref, '-')" # skip prereleases
+        with:
+          formula-name: 'semiuniq'
+          homebrew-tap: 'kljensen/homebrew-tap'
+          base-branch: 'main'
+          commit-message: '{{formulaName}} {{version}}'
+        env:
+          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
+
+
+
