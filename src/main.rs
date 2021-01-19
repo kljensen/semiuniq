@@ -1,6 +1,5 @@
 extern crate lru;
-use std::fs;
-use std::io::{self, BufReader, BufRead};
+use std::{fs, io::{self, BufReader, BufRead}};
 use clap::{Arg, App};
 use lru::LruCache;
 
@@ -33,23 +32,26 @@ fn main() -> std::io::Result<()> {
     // The input file is optional.
     let input_file = matches.value_of("FILE_NAME");
 
-    // If we don't receive an input file, use stdin.
-    let reader: Box<dyn BufRead> = match input_file {
+    let mut reader: Box<dyn BufRead> = match input_file {
         None => Box::new(BufReader::new(io::stdin())),
         Some(filename) => Box::new(BufReader::new(fs::File::open(filename)?))
     };
 
     // Iterate over all lines
-    for line in reader.lines() {
-        let l = line?;
-
-        // The put method will return `None` if the line is new and
-        // `true` if the line is a duplicate.
-        let line_is_repeat = seen_lines.put(l.clone(), true);
+    let mut line = String::new();
+    let mut bytes_read: usize;
+    let mut line_is_repeat: Option<bool>;
+    loop {
+        bytes_read = reader.read_line(&mut line)?;
+        if bytes_read == 0 {
+            break;
+        }
+        line_is_repeat = seen_lines.put(line.clone(), true);
         match line_is_repeat {
-            None => println!("{}", l),
+            None => print!("{}", line),
             _ => (),
         }
+        line.clear();
     }
     Ok(())
 }

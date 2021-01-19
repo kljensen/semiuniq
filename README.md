@@ -216,6 +216,7 @@ about rust, so I had to use the duckduckgo to write this code. Most of what I
 wrote here is copy/pasted from the following:
 
 * [Read large files line by line in Rust](https://stackoverflow.com/a/45882510)
+* [A remarkably simple solution to the problem of "Borrowed Iterators"](https://www.reddit.com/r/rust/comments/d4rl3d/a_remarkably_simple_solution_to_the_problem_of/)
 * [Reading from stdin or a file](https://stackoverflow.com/a/49964042)
 * [LruCache documentation](https://docs.rs/lru/0.6.1/lru/struct.LruCache.html)
 
