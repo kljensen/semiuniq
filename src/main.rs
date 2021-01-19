@@ -27,7 +27,7 @@ fn main() -> std::io::Result<()> {
     // Keep track of which lines we've seen using a Least Recently Used cache.
     // If we see "foo", we add it to the cache. And, if we've not seen it again
     // `window_size` lines later, "foo" is purged from the `LruCache` automatically.
-    let mut seen_lines: LruCache<String, bool> = LruCache::new(window_size);
+    let mut seen_lines: LruCache<String, ()> = LruCache::new(window_size);
 
     // The input file is optional.
     let input_file = matches.value_of("FILE_NAME");
@@ -40,13 +40,13 @@ fn main() -> std::io::Result<()> {
     // Iterate over all lines
     let mut line = String::new();
     let mut bytes_read: usize;
-    let mut line_is_repeat: Option<bool>;
+    let mut line_is_repeat: Option<()>;
     loop {
         bytes_read = reader.read_line(&mut line)?;
         if bytes_read == 0 {
             break;
         }
-        line_is_repeat = seen_lines.put(line.clone(), true);
+        line_is_repeat = seen_lines.put(line.clone(), ());
         match line_is_repeat {
             None => print!("{}", line),
             _ => (),
