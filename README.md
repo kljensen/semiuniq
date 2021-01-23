@@ -38,7 +38,9 @@ are "semi-unique" by eliminating repeated lines that are close to each other.
 It is like [GNU
 uniq](https://www.gnu.org/software/coreutils/manual/html_node/uniq-invocation.html)
 but 1) does not require sorting the input and 2) does not guarantee global
-uniqueness of output lines.
+uniqueness of output lines. See also, the PERL tool,
+[nauniq](https://metacpan.org/pod/distribution/App-nauniq/script/nauniq), which
+is similar.
 
 Why is this useful? It is useful because in many kinds of log files lines that
 are repeated are likely to be near to each other.
